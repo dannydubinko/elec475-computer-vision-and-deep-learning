@@ -1,0 +1,7 @@
+# Ignore any file (or folder) with "venv" in the name
+*venv*
+VOCtrainval_11-May-2012*
+
+# Ignore any folder named "data"
+data/
+models/
