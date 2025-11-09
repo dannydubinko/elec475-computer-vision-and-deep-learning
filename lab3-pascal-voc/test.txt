@@ -1,3 +1,5 @@
+python test_teacher.py
+
 python evaluate.py --model_path models/student_model_no_distillation.pth
 
 python evaluate.py --model_path models/student_model_kd.pth
