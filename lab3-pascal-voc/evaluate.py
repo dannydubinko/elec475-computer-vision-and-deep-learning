@@ -4,69 +4,53 @@ from torch.utils.data import DataLoader
 from torchmetrics.classification import JaccardIndex
 from tqdm import tqdm
 import argparse
+import os
 
 from student_model import CompactStudentModel
 import dataset as data_utils
 from test_teacher import get_device
+import visualize # <-- NEW IMPORT
 
-def evaluate_model(model_path):
-    print(f"Evaluating model: {model_path}")
+def evaluate_model(args):
+    model_name = os.path.splitext(os.path.basename(args.model_path))[0]
+    print(f"Evaluating model: {model_name}")
     
-    # --- 1. Setup ---
     device = get_device()
-    
-    # --- 2. Data ---
-    print("Loading validation dataset...")
-    # Use a batch size that fits your MPS memory
-    _, val_loader = data_utils.get_dataloaders(batch_size=16) 
+    # Use batch_size=1 for easier visualization handling in loop
+    _, val_loader = data_utils.get_dataloaders(batch_size=1) 
 
-    # --- 3. Model ---
-    print("Loading student model...")
+    if args.visualize:
+        save_dir = f"results/{model_name}"
+        os.makedirs(save_dir, exist_ok=True)
+        print(f"Saving visualizations to {save_dir}")
+
     model = CompactStudentModel(num_classes=data_utils.NUM_CLASSES)
-    
-    # Load the saved weights and map to the correct device
-    model.load_state_dict(torch.load(model_path, map_location=device))
+    model.load_state_dict(torch.load(args.model_path, map_location=device))
     model.to(device)
     model.eval()
 
-    # --- 4. Metric ---
-    # FIX 1: Keep metric on CPU to match training script and avoid OOM
-    metric = JaccardIndex(
-        task='multiclass', 
-        num_classes=data_utils.NUM_CLASSES, 
-        ignore_index=data_utils.IGNORE_INDEX
-    )
+    metric = JaccardIndex(task='multiclass', num_classes=data_utils.NUM_CLASSES, ignore_index=data_utils.IGNORE_INDEX)
 
-    # --- 5. Evaluation Loop ---
-    print("Running final evaluation...")
+    count = 0
     with torch.no_grad():
-        for images, targets in tqdm(val_loader, desc="Evaluating Student"):
-            images = images.to(device)
-            targets = targets.to(device)
-            
-            # FIX 2: Unpack outputs just like in train_kd.py
-            outputs = model(images) 
-            
+        for images, targets in tqdm(val_loader, desc="Evaluating"):
+            images, targets = images.to(device), targets.to(device)
+            outputs = model(images)
             preds = torch.argmax(outputs, dim=1)
-            
-            # FIX 3: Move to CPU for update to avoid MPS OOM/precision issues
             metric.update(preds.cpu(), targets.cpu())
 
-    # --- 6. Results ---
-    miou = metric.compute()
-    print("\n--- Final Evaluation Complete ---")
-    print(f"Model: {model_path}")
-    print(f"Final Student mIoU (VOC 2012 val): {miou.item():.4f}")
-    print("---------------------------------")
+            # --- VISUALIZATION ---
+            if args.visualize and count < args.num_images:
+                visualize.save_overlay(images[0], targets[0], preds[0], save_dir, count)
+                count += 1
+            # ---------------------
+
+    print(f"Final mIoU for {model_name}: {metric.compute().item():.4f}")
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Evaluate a trained student model")
-    parser.add_argument(
-        '--model_path', 
-        type=str, 
-        default="models/student_model_kd.pth", 
-        help="Path to the trained student model (.pth) file"
-    )
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--model_path', type=str, required=True, help="Path to .pth model file")
+    parser.add_argument('--visualize', action='store_true', help="Save qualitative results")
+    parser.add_argument('--num_images', type=int, default=10, help="Number of images to save")
     args = parser.parse_args()
-    
-    evaluate_model(args.model_path)
+    evaluate_model(args)

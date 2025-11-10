@@ -3,3 +3,9 @@ python test_teacher.py
 python evaluate.py --model_path models/student_model_no_distillation.pth
 
 python evaluate.py --model_path models/student_model_kd.pth
+
+# Visualize Images 
+
+python test_teacher.py --visualize --num_images 5
+python evaluate.py --model_path models/student_model_no_distillation.pth --visualize --num_images 5
+python evaluate.py --model_path models/student_model_kd.pth --visualize --num_images 5
