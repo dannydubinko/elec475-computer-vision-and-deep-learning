@@ -237,7 +237,11 @@ def train_distilled_model(args):
         
         # Save and close the figure
         plt.tight_layout(rect=[0, 0.03, 1, 0.95])
-        plt.savefig("plots/training_plot.png")  # Overwrites the file each epoch
+
+        if args.alpha == 0.0 and args.beta == 0.0:
+            plt.savefig("plots/training_plot_no_distillation.png")
+        else:
+            plt.savefig("plots/training_plot_with_distillation.png")  # Overwrites the file each epoch
         plt.close(fig) # Close figure to free memory
         # --- End Save Plot ---
 
@@ -248,11 +252,11 @@ def train_distilled_model(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Train Student Model with Knowledge Distillation")
-    parser.add_argument('--epochs', type=int, default=50, help="Number of training epochs")
+    parser.add_argument('--epochs', type=int, default=35, help="Number of training epochs")
     parser.add_argument('--batch_size', type=int, default=8, help="Batch size (adjust for your VRAM)")
     parser.add_argument('--lr', type=float, default=1e-3, help="Learning rate")
     parser.add_argument('--alpha', type=float, default=0.9, help="Weight for soft (KD response) loss")
-    parser.add_argument('--beta', type=float, default=10.0, help="Weight for feature-based (KD feature) loss")
+    parser.add_argument('--beta', type=float, default=0.5, help="Weight for feature-based (KD feature) loss")
     parser.add_argument('--temp', type=float, default=4.0, help="Temperature for distillation")
     
     args = parser.parse_args()

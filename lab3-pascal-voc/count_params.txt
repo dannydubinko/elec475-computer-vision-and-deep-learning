@@ -1,0 +1,4 @@
+python count_parameters.py student
+    *(This is the number the lab will penalize you for if it's too high)*
+
+    python count_parameters.py teacher
