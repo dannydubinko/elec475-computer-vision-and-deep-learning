@@ -1,3 +1,13 @@
-python train_kd.py --alpha 0.0 --beta 0.0 --epochs 35
+UPDATED COMOMANDS
+python dataset.py
 
-python train_kd.py --alpha 0.9 --beta 0.5 --temp 4.0 --epochs 35
+## TRAIN
+
+# alpha=0.0 and beta=0.0 disables all distillation
+python train_kd.py --alpha 0.0 --beta 0.0 --epochs 30 --lr 1e-3 --batch_size 8
+
+# alpha > 0 enables response-KD. beta=0.0 disables feature-KD.
+python train_kd.py --alpha 0.9 --beta 0.0 --temp 4.0 --epochs 30 --lr 1e-3 --batch_size 8
+
+# alpha=0.0 disables response-KD. beta > 0 enables feature-KD.
+python train_kd.py --alpha 0.0 --beta 0.5 --epochs 30 --lr 1e-3 --batch_size 8

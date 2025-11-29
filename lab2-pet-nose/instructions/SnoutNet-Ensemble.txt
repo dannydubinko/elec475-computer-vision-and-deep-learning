@@ -1,0 +1,10 @@
+# --- Ensemble Testing Command ---
+python ensemble_test.py
+
+python visualize.py --mode compare \
+  --custom_noaug_path snoutnet_custom_noaug_model.pth \
+  --alexnet_noaug_path snoutnet_alexnet_noaug_model.pth \
+  --vgg16_noaug_path snoutnet_vgg16_noaug_model.pth \
+  --custom_aug_path snoutnet_custom_flip_erase_model.pth \
+  --alexnet_aug_path snoutnet_alexnet_flip_erase_model.pth \
+  --vgg16_aug_path snoutnet_vgg16_flip_erase_model.pth

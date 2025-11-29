@@ -1,0 +1,10 @@
+# VGG16 Backbone
+python train.py --model vgg16 --no_augmentation
+python train.py --model vgg16
+
+# Test vgg16 model (both noaug and flip_erase)
+python test.py --model vgg16
+
+python visualize.py --mode compare_two \
+  --model_path1 snoutnet_custom_noaug_model.pth \
+  --model_path2 snoutnet_custom_flip_erase_model.pth

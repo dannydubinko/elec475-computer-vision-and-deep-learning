@@ -1,7 +1,24 @@
+## TEST
+python test_teacher.py --visualize --num_images ５
 
-# Visualize Images 
-python test_teacher.py --visualize --num_images 5
+# Model Saved: models/student_model_no_distillation.pth
+python evaluate.py --model_path models/student_model_no_distillation.pth --measure_speed
 
+# Model Saved: models/student_model...
+python evaluate.py --model_path models/student_model_response_kd.pth --measure_speed
+
+# Model Saved: models/student_model...
+python evaluate.py --model_path models/student_model_feature_kd.pth --measure_speed
+
+## VISUALIZATION
+# Teacher Model Visualization 
+python test_teacher.py --visualize --num_images ５
+
+# Student Model (No Distillation) Visuals
 python evaluate.py --model_path models/student_model_no_distillation.pth --visualize --num_images 5
 
-python evaluate.py --model_path models/student_model_kd.pth --visualize --num_images 5
+# Student Model (Response-Based KD) Visuals
+python evaluate.py --model_path models/student_model_response_kd.pth --visualize --num_images 5
+
+# Student Model (Feature-Based KD) Visuals
+python evaluate.py --model_path models/student_model_feature_kd.pth --visualize --num_images 5

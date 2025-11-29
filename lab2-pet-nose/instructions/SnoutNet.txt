@@ -1,0 +1,12 @@
+# Custom SnoutNet
+python train.py --model custom --no_augmentation
+python train.py --model custom
+
+# Test custom model (both noaug and flip_erase)
+python test.py --model custom
+
+# Visualize
+python visualize.py --mode compare_two \
+  --model_path1 snoutnet_custom_noaug_model.pth \
+  --model_path2 snoutnet_custom_flip_erase_model.pth
+

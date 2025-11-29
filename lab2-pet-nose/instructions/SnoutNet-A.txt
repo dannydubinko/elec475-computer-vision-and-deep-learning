@@ -1,0 +1,11 @@
+# AlexNet Backbone
+python train.py --model alexnet --no_augmentation
+python train.py --model alexnet
+
+# Test alexnet model (both noaug and flip_erase)
+python test.py --model alexnet
+
+# Visualize
+python visualize.py --mode compare_two \
+  --model_path1 snoutnet_alexnet_noaug_model.pth \
+  --model_path2 snoutnet_alexnet_flip_erase_model.pth

@@ -1,0 +1,11 @@
+# Core packages
+numpy
+matplotlib
+
+# PyTorch with MPS (GPU acceleration on Mac)
+torch
+torchvision
+torchaudio
+
+# Model summary utility
+torch-summary
