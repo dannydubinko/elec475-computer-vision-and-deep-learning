@@ -15,7 +15,7 @@ DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 CHECKPOINT_PATH = "checkpoints/clip_epoch_5.pt" 
 
 # Limit evaluation to 5,000 samples to prevent RAM crash (OOM)
-MAX_EVAL_SAMPLES = 10000 
+MAX_EVAL_SAMPLES = 2000
 BATCH_SIZE = 32
 
 def get_embeddings(model, dataloader):

@@ -1,0 +1,13 @@
+To run evaluation for the non-augmentation model:
+1. Navigate to the non_augmentation directory:
+   cd non_augmentation
+2. Run the evaluation script:
+   python eval.py
+   (Note: Ensure checkpoints are available in non_augmentation/checkpoints)
+
+To run evaluation for the augmentation model:
+1. Navigate to the augmentation directory:
+   cd augmentation
+2. Run the evaluation script:
+   python eval_augmentation.py
+   (Note: Ensure checkpoints are available in augmentation/checkpoints_augmentation)

@@ -23,8 +23,8 @@ else:
 
 # Path to the specific epoch you want to evaluate
 CHECKPOINT_PATH = "checkpoints_augmentation/clip_epoch_5.pt" 
-MAX_EVAL_SAMPLES = 2000 
-BATCH_SIZE = 64
+MAX_EVAL_SAMPLES = 2000
+BATCH_SIZE = 32
 
 def get_embeddings(model, dataloader):
     model.eval()

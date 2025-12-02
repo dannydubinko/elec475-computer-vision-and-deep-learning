@@ -1,0 +1,11 @@
+To run training for the non-augmentation model:
+1. Navigate to the non_augmentation directory:
+   cd non_augmentation
+2. Run the training script:
+   python train.py
+
+To run training for the augmentation model:
+1. Navigate to the augmentation directory:
+   cd augmentation
+2. Run the training script:
+   python train_augmentation.py

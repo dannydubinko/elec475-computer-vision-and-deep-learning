@@ -12,9 +12,9 @@ from model import CLIPModel
 
 # --- Hyperparameters ---
 BATCH_SIZE = 32
-LEARNING_RATE = 1e-5
+LEARNING_RATE = 1e-4
 EPOCHS = 5
-DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+DEVICE = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
 SAVE_DIR = "checkpoints"
 
 os.makedirs(SAVE_DIR, exist_ok=True)
