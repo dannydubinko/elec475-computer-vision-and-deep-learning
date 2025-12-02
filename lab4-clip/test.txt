@@ -1,14 +1,14 @@
 Note: If the COCO2014 dataset is in another location, 
 please change the BASE_ROOT variable in the dataset.py file.
 
-To run evaluation for the non-augmentation model:
+--- To run evaluation for the NON-AUGMENTATION model: ---
 1. Navigate to the non_augmentation directory:
    cd non_augmentation
 2. Run the evaluation script:
    python eval.py
    (Note: Ensure checkpoints are available in non_augmentation/checkpoints)
 
-To run evaluation for the augmentation model:
+--- To run evaluation for the AUGMENTATION model: ---
 1. Navigate to the augmentation directory:
    cd augmentation
 2. Run the evaluation script:
