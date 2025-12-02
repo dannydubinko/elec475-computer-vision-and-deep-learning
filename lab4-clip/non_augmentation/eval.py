@@ -11,7 +11,12 @@ from dataset import CocoDataset, CocoCollator
 from model import CLIPModel
 
 # --- Config ---
-DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+if torch.cuda.is_available():
+    DEVICE = "cuda"
+elif torch.backends.mps.is_available():
+    DEVICE = "mps"
+else:
+    DEVICE = "cpu"
 CHECKPOINT_PATH = "checkpoints/clip_epoch_5.pt" 
 
 # Limit evaluation to 5,000 samples to prevent RAM crash (OOM)

@@ -1,3 +1,6 @@
+Note: If the COCO2014 dataset is in another location, 
+please change the BASE_ROOT variable in the dataset.py file.
+
 To run training for the non-augmentation model:
 1. Navigate to the non_augmentation directory:
    cd non_augmentation
