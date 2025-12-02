@@ -14,18 +14,15 @@ from PIL import Image
 
 # 1. Image Directory (From Kaggle Cache)
 # Based on your previous 'ls', the images are in .../coco2014/images/train2014
-KAGGLE_ROOT = "/kaggle/input/coco-2014-dataset-for-yolov3/coco2014"
+BASE_ROOT = "../coco2014"
 IMAGE_PATHS = {
-    "train": os.path.join(KAGGLE_ROOT, "images/train2014"),
-    "val": os.path.join(KAGGLE_ROOT, "images/val2014")
+    "train": os.path.join(BASE_ROOT, "images/train2014"),
+    "val": os.path.join(BASE_ROOT, "images/val2014")
 }
 
-# 2. Annotation Directory (From /content/)
-# You located the folder at /content/annotations
-ANNOTATION_ROOT = "/content/annotations"
 ANNOTATION_PATHS = {
-    "train": os.path.join(ANNOTATION_ROOT, "captions_train2014.json"),
-    "val": os.path.join(ANNOTATION_ROOT, "captions_val2014.json")
+    "train": os.path.join(BASE_ROOT, "annotations/captions_train2014.json"),
+    "val": os.path.join(BASE_ROOT, "annotations/captions_val2014.json")
 }
 
 # Pretrained model name for the processor
