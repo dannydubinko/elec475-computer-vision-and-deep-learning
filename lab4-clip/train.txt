@@ -1,0 +1,12 @@
+# --- COMMANDS TO RUN TRAINING ---
+
+# Note on Dataset Paths:
+# The scripts assume the COCO 2014 dataset is located at "../coco2014".
+# Please modify the 'BASE_ROOT' variable in 'dataset.py' and 'dataset_augmentation.py'
+# if your dataset is located elsewhere.
+
+# 1. Run Baseline Training (Batch Size 32, No Augmentation)
+python train.py
+
+# 2. Run Augmented Training (Batch Size 64, Augmentation, Cosine Scheduler)
+# python train_augmentation.py
