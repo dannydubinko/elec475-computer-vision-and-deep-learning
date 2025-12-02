@@ -1,0 +1,16 @@
+# --- COMMANDS TO RUN EVALUATION ---
+
+# Note on Dataset Paths:
+# The scripts assume the COCO 2014 dataset is located at "../coco2014".
+# Please modify the 'BASE_ROOT' variable in 'dataset.py' and 'dataset_augmentation.py'
+# if your dataset is located elsewhere.
+
+# Note on Checkpoints:
+# Ensure 'checkpoints/' or 'checkpoints_augmentation/' directories exist 
+# and contain 'clip_epoch_5.pt' before running.
+
+# 1. Run Baseline Evaluation (Calculates Recall@K and generates visualizations)
+python eval.py
+
+# 2. Run Augmented Evaluation (Calculates Recall@K and generates visualizations)
+# python eval_augmentation.py
