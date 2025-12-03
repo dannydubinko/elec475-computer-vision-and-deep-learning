@@ -116,13 +116,13 @@ def visualize_text_to_image(model, dataset, query, k=5):
         text_emb = model.text_encoder(inputs["input_ids"], inputs["attention_mask"])
     
     # We scan more items to ensure we find decent matches
-    loader = DataLoader(dataset, batch_size=32, shuffle=False, collate_fn=CocoCollator())
+    loader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=False, collate_fn=CocoCollator())
     all_img_embs = []
     
-    print("Scanning dataset for matches...")
+    print(f"Scanning dataset for matches (Limit: {MAX_EVAL_SAMPLES})...")
     with torch.no_grad():
         for i, batch in enumerate(loader):
-            if i > 50: break # Scan ~1600 images
+            if i * BATCH_SIZE >= MAX_EVAL_SAMPLES: break
             pixel_values = batch["pixel_values"].to(DEVICE)
             all_img_embs.append(model.image_encoder(pixel_values).cpu())
             

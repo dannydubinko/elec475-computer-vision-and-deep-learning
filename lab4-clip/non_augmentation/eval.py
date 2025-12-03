@@ -102,20 +102,18 @@ def visualize_retrieval(model, dataset, text_query, k=5):
     # Helper to get embeddings for scanning
     candidates = []
     collator = CocoCollator() 
-    loader = DataLoader(dataset, batch_size=32, shuffle=False, collate_fn=collator)
+    loader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=False, collate_fn=collator)
     
-    print("Scanning images for matches...")
-    # We scan 1000 images (which is ~200 unique images due to 5x duplication)
-    # You can increase this limit if you want more variety
+    print(f"Scanning images for matches (Limit: {MAX_EVAL_SAMPLES})...")
+    
     with torch.no_grad():
         for i, batch in enumerate(loader):
-            if i * 32 > 1000: break 
+            if i * BATCH_SIZE >= MAX_EVAL_SAMPLES: break 
             pixel_values = batch["pixel_values"].to(DEVICE)
             img_emb = model.image_encoder(pixel_values)
-            candidates.append(img_emb)
+            candidates.append(img_emb.cpu())
             
-    all_img_embs = torch.cat(candidates) 
-    
+    all_img_embs = torch.cat(candidates).to(DEVICE) 
     # Compute Similarity
     sims = (text_emb @ all_img_embs.T).squeeze()
     
